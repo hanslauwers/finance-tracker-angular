@@ -1,23 +1,35 @@
 <h1>My Portfolio</h1>
 
 <h3>Search for Stocks</h3>
-<div id="stock-lookup">
-  <%= form_tag search_stocks_path, remote: true, method: :get, id: 'stock-lookup-form' do %>
+<div id="stock-lookup" ng-controller="stocksController">
+  <form id="stock-lookup-form" ng-submit="lookup()">
     <div class="form-group row no-padding text-center col-md-12">
       <div class="col-md-10">
-        <%= text_field_tag :stock, params[:stock], placeholder: "Stock Ticker Symbol", autofocus: true, class: "form-control search-box input-lg" %>
+        <input id="stock_ticker" type="text" class="form-control search-box input-lg" placeholder="Stock Ticker Symbol"
+                autofocus="true" ng-model="ticker" />
       </div>
       <div class="col-md-2">
-        <%= button_tag(type: :submit, class: "btn btn-lg btn-success") do %>
+        <button type="submit" class="btn btn-lg btn-success">
           <i class="fa fa-search"></i> Look up a stock
-        <% end %>
+        </button>
       </div>
     </div>
-  <% end %>
+  </form>
+  <div class="results-block ng-hide">
+    <span class="badge">Placeholder for notifications</span>
+  </div>
+  
+  <div id="stock-lookup-results" class="well results-block ng-hide" ng-show="stock.name != undefined">
+    <strong>Symbol: </strong> {{ stock.symbol }}
+    <strong>Name: </strong> {{ stock.name }}
+    <strong>Price: </strong> {{ stock.last_price }}
+    
+    <a href="#" class="btn btn-xs btn-success ng-hide" ng-show="stock.can_be_added">Add to my stocks</a>
+    
+    <span class="label label-default"></span>
+  </div>
 </div>
-<div id="results">
-  <%= render 'result' %>
-</div>
+
 <%= render 'stocks/list' %>
 
 
