@@ -1,5 +1,11 @@
 {
   "name": "finance-tracker",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@rails/webpacker": "3.5",
+    "angular": "1.6.6"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "2.11.2"
+  }
 }

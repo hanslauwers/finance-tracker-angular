@@ -10,10 +10,11 @@ end
 gem 'rails', '~> 5.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'devise'
+gem 'webpacker'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'devise-bootstrap-views'
-gem 'stock_quote'
+gem "stock_quote", '~> 2.0.0'
 gem 'font-awesome-rails'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
