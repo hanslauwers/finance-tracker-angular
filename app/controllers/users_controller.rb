@@ -3,6 +3,11 @@ class UsersController < ApplicationController
   def my_portfolio
     @user_stocks = current_user.stocks
     @user = current_user
+    
+    respond_to do |format|
+      format.html { render :my_portfolio }
+      format.js { render partial: 'stocks/list.html' }
+    end
   end
   
   def my_friends

@@ -1,14 +1,17 @@
 class UserStocksController < ApplicationController
   
+  protect_from_forgery with: :exception, unless: -> { request.format.json? }
+  
   def create
-    stock = Stock.find_by_ticker(params[:stock_ticker])
+    stock = Stock.find_by_ticker(params[:stock])
     if stock.blank?
-      stock = Stock.new_from_lookup(params[:stock_ticker])
+      stock = Stock.new_from_lookup(params[:stock])
       stock.save
     end
     @user_stock = UserStock.create(user: current_user, stock: stock)
     flash[:success] = "Stock #{@user_stock.stock.name} was successfully added"
-    redirect_to my_portfolio_path
+    
+    render json: { response: flash[:success] }, status: :ok
   end
   
   def destroy

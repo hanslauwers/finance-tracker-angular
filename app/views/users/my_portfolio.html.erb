@@ -15,8 +15,11 @@
       </div>
     </div>
   </form>
-  <div class="results-block ng-hide">
-    <span class="badge">Placeholder for notifications</span>
+  <div id="stock-lookup-status" class="results-block alert alert-success ng-hide" ng-show="stock.message">
+    {{ stock.message }}
+  </div>
+  <div id="stock-lookup-errors" class="results-block alert alert-danger ng-hide" ng-show="stock.error">
+    {{ stock.error }}
   </div>
   
   <div id="stock-lookup-results" class="well results-block ng-hide" ng-show="stock.name != undefined">
@@ -24,12 +27,13 @@
     <strong>Name: </strong> {{ stock.name }}
     <strong>Price: </strong> {{ stock.last_price }}
     
-    <a href="#" class="btn btn-xs btn-success ng-hide" ng-show="stock.can_be_added">Add to my stocks</a>
+    <button class="btn btn-xs btn-success ng-hide" ng-show="stock.can_be_added" ng-click="add()">Add to my stocks</button>
     
     <span class="label label-default"></span>
   </div>
 </div>
 
-<%= render 'stocks/list' %>
-
+<div id="stock-list">
+  <%= render 'stocks/list' %>
+</div>
 
