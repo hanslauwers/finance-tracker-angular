@@ -1,18 +1,42 @@
 <h3>Search for Friends</h3>
 <div id="friend-lookup">
-  <%= form_tag search_friends_path, remote: true, method: :get, id: 'friend-lookup-form' do %>
+  <form id="friend-lookup-form" ng-submit="lookup()">
     <div class="form-group row no-padding text-center col-md-12">
       <div class="col-md-10">
-        <%= text_field_tag :search_param, params[:search_param], placeholder: "Enter name or email", autofocus: true, class: "form-control search-box input-lg" %>
+        <input type="text" id="friend-search-param" class="form-control search-box input-lg" placeholder="Enter name or email"
+          autofocus="true" ng-model="friend_search_param" />
       </div>
       <div class="col-md-2">
-        <%= button_tag(type: :submit, class: "btn btn-lg btn-success") do %>
+        <button type="submit" class="btn btn-lg btn-success">
           <i class="fa fa-search"></i> Search
-        <% end %>
+        </button>
       </div>
     </div>
-  <% end %>
+  </form>
 </div>
 <div id="results">
-  <%= render 'friends/result' %>
+  <div class="results-block alert alert-danger ng-hide" id="friend-lookup-errors" ng-show="friends.error">
+    {{ friends.error }}
+  </div>
+  <div class="results-block alert alert-success ng-hide" id="friend-lookup-status" ng-show="friends.message">
+    {{ friends.message }}
+  </div>
+  
+  <div id="friend-lookup-results" class="well results-block col-md-10 ng-hide" ng-show="friends.list.length > 0">
+    <table class="search-results-table col-md-12">
+      <tbody ng-repeat="friend in friends.list">
+          <tr>
+            <td><strong>Name:</strong> {{friend.first_name}} {{friend.last_name}}</td>
+            <td><strong>Email:</strong> {{friend.email}}</td>
+            <td><strong>Profile:</strong>
+                <a class="btn btn-xs btn-success" href={{friend.profile_path}}>View Profile</a>
+                <button class="btn btn-xs btn-success ng-hide" ng-show="!friend.friends_already" ng-click="add(friend.id)">Add as my friend</button>
+                <span class="label label-primary ng-hide" ng-show="friend.friends_already">
+                  friend
+                </span>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
